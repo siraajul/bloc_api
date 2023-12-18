@@ -1,9 +1,19 @@
+import 'dart:developer';
+import 'package:bloc_api/data/models/post_model.dart';
 import 'package:bloc_api/data/repositories/api/api.dart';
+import 'package:dio/dio.dart';
 
-class PostRepository{
-
+class PostRepository {
   API api = API();
-  void fetchPosts() async{
 
+  Future<List<PostModel>?> fetchPosts() async {
+    try {
+      Response response = await api.sendRequest.get("/posts");
+      List<dynamic> postMaps = response.data;
+      return postMaps.map((postMap) => PostModel.fromJson(postMap)).toList();
+
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
