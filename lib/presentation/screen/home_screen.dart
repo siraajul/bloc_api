@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return ListView.builder(
                 itemCount: state.posts.length,
                 itemBuilder: (context, index) {
-                  PostModel post = state.posts[index];
+                  final post = state.posts[index];
                   return ListTile(
                     title: Text(post.title.toString()),
                     subtitle: Text(post.body.toString()),
