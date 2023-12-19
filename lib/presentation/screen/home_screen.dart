@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../logic/cubits/post_cubit/post_cubit.dart';
 
-class HomeScreen extends StatefulWidget {
+//-------------------------------------------StateFul Widget-----------------------------------
+/*class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
@@ -41,6 +42,46 @@ class _HomeScreenState extends State<HomeScreen> {
             }
             return const Center(
               child: Text('An Error Occurred! '),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}*/
+//-------------------------------------------StateLess Widget-----------------------------------
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('API Handling'),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: BlocBuilder<PostCubit, PostState>(
+          builder: (context, state) {
+            if (state is PostLoadingState) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (state is PostLoadedState) {
+              return ListView.builder(
+                itemCount: state.posts.length,
+                itemBuilder: (context, index) {
+                  final post = state.posts[index];
+                  return ListTile(
+                    title: Text(post.title.toString()),
+                    subtitle: Text(post.body.toString()),
+                  );
+                },
+              );
+            }
+            return const Center(
+              child: Text('An Error Occurred!'),
             );
           },
         ),
